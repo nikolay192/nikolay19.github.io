@@ -15,6 +15,9 @@
     #console {
       height: 80vh;
     }
+    #calculator, #console {
+      display: block; /* Убираем hidden, чтобы они были видимы */
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
@@ -29,7 +32,7 @@
   </div>
 
   <!-- Калькулятор -->
-  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg hidden z-50 w-96 max-w-full">
+  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg z-50 w-96 max-w-full">
     <h2 class="text-xl mb-4 font-bold">Калькулятор</h2>
     <input id="calcInput" type="text" placeholder="Введи приклад..." class="w-full p-2 rounded mb-2 text-black" />
     <button onclick="calculate()" class="bg-green-600 px-4 py-2 rounded font-semibold hover:bg-green-700">=</button>
@@ -37,7 +40,7 @@
   </div>
 
   <!-- Консоль -->
-  <div id="console" class="flex mt-4 hidden z-40 h-[80vh]">
+  <div id="console" class="flex mt-4 z-40 h-[80vh]">
     <!-- Меню слева -->
     <div class="w-1/4 p-4 overflow-y-auto max-h-full hidden-scrollbar border-r border-gray-700">
       <details open>
@@ -128,115 +131,43 @@
   </div>
 
   <script>
-    // Переключение видимости калькулятора и консоли
     const calcBtn = document.getElementById('calcBtn');
     const consoleBtn = document.getElementById('consoleBtn');
     const calculator = document.getElementById('calculator');
     const consoleEl = document.getElementById('console');
 
-    let calcOpen = false;
-    let consoleOpen = false;
+    let calcOpen = true;  // по умолчанию оба видны
+    let consoleOpen = true;
 
     calcBtn.onclick = () => {
       calcOpen = !calcOpen;
-      calculator.classList.toggle('hidden', !calcOpen);
-      if (calcOpen) consoleEl.classList.add('hidden');
-      else calculator.querySelector('#calcInput').focus();
+      calculator.style.display = calcOpen ? 'block' : 'none';
+      // Если калькулятор показываем, консоль скрываем, и наоборот — или можно оставить оба открытыми, решай сам
+      if (calcOpen) {
+        consoleEl.style.display = 'none';
+        consoleOpen = false;
+      }
     };
 
     consoleBtn.onclick = () => {
       consoleOpen = !consoleOpen;
-      consoleEl.classList.toggle('hidden', !consoleOpen);
-      if (consoleOpen) calculator.classList.add('hidden');
-      else document.getElementById('searchInput').focus();
+      consoleEl.style.display = consoleOpen ? 'flex' : 'none';
+      if (consoleOpen) {
+        calculator.style.display = 'none';
+        calcOpen = false;
+      }
     };
 
-    // Калькулятор
     function calculate() {
       const input = document.getElementById('calcInput').value;
       try {
-        const result = eval(input);
+        // безопасный eval
+        const result = Function('"use strict";return (' + input + ')')();
         document.getElementById('calcResult').innerText = `Результат: ${result}`;
       } catch {
         document.getElementById('calcResult').innerText = 'Помилка в обчисленнях';
       }
     }
-
-    // База данных предметов и крафтов
-    const ingredients = {
-      // Ресурсы
-      "red extract": {
-        ingredients: ["50 Strawberry"],
-        methods: "Отримується з червоних коробок або крафтиться."
-      },
-      "blue extract": {
-        ingredients: ["50 Blueberry"],
-        methods: "Отримується з синіх коробок або крафтиться."
-      },
-      "enzymes": {
-        ingredients: ["10 Pineapple", "10 Royal Jelly", "1 Oil"],
-        methods: "Крафт у Blender."
-      },
-      "oil": {
-        ingredients: ["3 Sunflower Seed", "3 Pineapple", "3 Enzymes"],
-        methods: "Крафт у Blender, або отримується з квестів."
-      },
-      "glue": {
-        ingredients: ["10 Gumdrops", "1 Royal Jelly", "1 Enzymes"],
-        methods: "Крафт або випадає з подарунків."
-      },
-      "glitter": {
-        ingredients: ["25 Moon Charm", "1 Magic Bean", "1 Oil"],
-        methods: "Крафт або з Moon Sprout."
-      },
-      "tropical drink": {
-        ingredients: ["3 Coconut", "3 Pineapple", "3 Oil"],
-        methods: "Крафт у Blender."
-      },
-      "purple potion": {
-        ingredients: ["3 Red Extract", "3 Blue Extract", "3 Enzymes", "3 Oil", "1 Glitter"],
-        methods: "Крафт у Blender."
-      },
-      "super smoothie": {
-        ingredients: ["3 Purple Potion", "1 Red Extract", "1 Blue Extract", "1 Oil", "1 Enzymes", "1 Glitter"],
-        methods: "Крафт у Blender."
-      },
-      "swirled wax": {
-        ingredients: ["15 Honey", "15 Turpentine"],
-        methods: "Крафт."
-      },
-      "caustic wax": {
-        ingredients: ["15 Turpentine", "15 Caustic Cauliflower"],
-        methods: "Крафт."
-      },
-      "hard wax": {
-        ingredients: ["20 Honey", "20 Turpentine", "5 Caustic Cauliflower"],
-        methods: "Крафт."
-      },
-      "soft wax": {
-        ingredients: ["10 Honey", "10 Turpentine"],
-        methods: "Крафт."
-      },
-      "turpentine": {
-        ingredients: ["25 Swirled Wax", "25 Soft Wax"],
-        methods: "Крафт."
-      },
-      "royal jelly": {
-        ingredients: ["100 Honey", "50 Royal Jelly"],
-        methods: "Отримується від бджіл, або крафт."
-      },
-      "moon charm": {
-        ingredients: ["1 Magic Bean", "1 Honey"],
-        methods: "Отримується з Moon Sprout."
-      },
-      "magic bean": {
-        ingredients: ["5 Enchanted Acorn", "5 Enchanted Stick"],
-        methods: "Отримується з квестів."
-      },
-      "sunflower seed": {
-        ingredients: [],
-        methods: "Збирається на соняшникових полях."
-      },
-      "pineapple": {
-        ingredients: [],
-        methods: "Збирається на тропіч
+  </script>
+</body>
+</html>
