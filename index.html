@@ -1,35 +1,48 @@
-<!DOCTYPE html><html lang="uk">
+<!DOCTYPE html>
+<html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bee Swarm Craft Helper</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bee Swarm Craft Helper - Повна база</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .hidden-scrollbar::-webkit-scrollbar {
       display: none;
     }
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #console {
+      height: 80vh;
+    }
   </style>
 </head>
-<body class="bg-gray-900 text-white">
-  <!-- Панель іконок -->
-  <div class="p-4 flex gap-4">
-    <button id="calcBtn" class="bg-yellow-500 hover:bg-yellow-600 p-2 rounded-full">
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+  <!-- Кнопки переключения -->
+  <div class="p-4 flex gap-4 bg-gray-800">
+    <button id="calcBtn" class="bg-yellow-500 hover:bg-yellow-600 p-2 rounded-full font-semibold">
       Калькулятор
     </button>
-    <button id="consoleBtn" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full">
+    <button id="consoleBtn" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full font-semibold">
       Консоль
     </button>
-  </div>  <!-- Калькулятор -->  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg hidden z-50">
-    <h2 class="text-xl mb-4">Калькулятор</h2>
-    <input type="text" placeholder="Введи приклад..." class="w-full p-2 rounded mb-2 text-black" id="calcInput">
-    <button onclick="calculate()" class="bg-green-500 px-4 py-2 rounded">=</button>
+  </div>
+
+  <!-- Калькулятор -->
+  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg hidden z-50 w-96 max-w-full">
+    <h2 class="text-xl mb-4 font-bold">Калькулятор</h2>
+    <input id="calcInput" type="text" placeholder="Введи приклад..." class="w-full p-2 rounded mb-2 text-black" />
+    <button onclick="calculate()" class="bg-green-600 px-4 py-2 rounded font-semibold hover:bg-green-700">=</button>
     <p class="mt-2" id="calcResult"></p>
-  </div>  <!-- Консоль -->  <div id="console" class="flex mt-4 hidden z-40">
-    <!-- Меню з ресурсами -->
-    <div class="w-1/4 p-4 overflow-y-auto max-h-[80vh] hidden-scrollbar">
+  </div>
+
+  <!-- Консоль -->
+  <div id="console" class="flex mt-4 hidden z-40 h-[80vh]">
+    <!-- Меню слева -->
+    <div class="w-1/4 p-4 overflow-y-auto max-h-full hidden-scrollbar border-r border-gray-700">
       <details open>
         <summary class="cursor-pointer text-lg font-bold">Ресурси</summary>
-        <ul class="ml-4 mt-2 space-y-1">
+        <ul class="ml-4 mt-2 space-y-1 text-sm">
           <li>Red Extract</li>
           <li>Blue Extract</li>
           <li>Enzymes</li>
@@ -44,43 +57,78 @@
           <li>Hard Wax</li>
           <li>Soft Wax</li>
           <li>Turpentine</li>
+          <li>Royal Jelly</li>
+          <li>Moon Charm</li>
+          <li>Magic Bean</li>
+          <li>Sunflower Seed</li>
+          <li>Pineapple</li>
+          <li>Strawberry</li>
+          <li>Blueberry</li>
+          <li>Coconut</li>
+          <li>Gumdrops</li>
+          <li>Super Coconuts</li>
+          <li>Moon Sprout</li>
+          <li>Spirit Bear</li>
+          <li>Spirit Bear's Paw</li>
+          <li>Honey</li>
+          <li>Enchanted Acorn</li>
+          <li>Enchanted Stick</li>
+          <li>Ghostly Wax</li>
+          <li>Enchanted Vine</li>
+          <li>Enchanted Bark</li>
+          <li>Sticky Honey</li>
+          <li>Caustic Cauliflower</li>
         </ul>
       </details>
+
       <details>
         <summary class="cursor-pointer text-lg font-bold">Палки</summary>
-        <ul class="ml-4 mt-2 space-y-1">
+        <ul class="ml-4 mt-2 space-y-1 text-sm">
           <li>Petal Wand</li>
           <li>Tide Popper</li>
           <li>Dark Scythe</li>
           <li>Gummy Baller</li>
         </ul>
       </details>
+
       <details>
         <summary class="cursor-pointer text-lg font-bold">Маски</summary>
-        <ul class="ml-4 mt-2 space-y-1">
+        <ul class="ml-4 mt-2 space-y-1 text-sm">
           <li>Gummy Mask</li>
           <li>Demon Mask</li>
           <li>Diamond Mask</li>
           <li>Honey Mask</li>
         </ul>
       </details>
+
       <details>
         <summary class="cursor-pointer text-lg font-bold">Пояси</summary>
-        <ul class="ml-4 mt-2 space-y-1">
+        <ul class="ml-4 mt-2 space-y-1 text-sm">
           <li>Gummy Belt</li>
           <li>Honey Belt</li>
           <li>Supreme Star Amulet</li>
         </ul>
       </details>
-    </div><!-- Основна консоль -->
-<div class="w-3/4 p-4">
-  <input id="searchInput" type="text" placeholder="Сюди вводити текст" class="w-full p-2 rounded text-black">
-  <div id="searchResults" class="mt-4">
-    <!-- Тут буде показано результат крафта -->
-  </div>
-</div>
 
-  </div>  <script>
+      <details>
+        <summary class="cursor-pointer text-lg font-bold">Наплечники</summary>
+        <ul class="ml-4 mt-2 space-y-1 text-sm">
+          <li>Petal Mantle</li>
+          <li>Enchanted Cape</li>
+          <li>Honey Cloak</li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- Основная консоль -->
+    <div class="w-3/4 p-4 overflow-y-auto max-h-full hidden-scrollbar">
+      <input id="searchInput" type="text" placeholder="Сюди вводити текст" class="w-full p-2 rounded text-black" autocomplete="off" />
+      <div id="searchResults" class="mt-4 text-sm"></div>
+    </div>
+  </div>
+
+  <script>
+    // Переключение видимости калькулятора и консоли
     const calcBtn = document.getElementById('calcBtn');
     const consoleBtn = document.getElementById('consoleBtn');
     const calculator = document.getElementById('calculator');
@@ -92,13 +140,18 @@
     calcBtn.onclick = () => {
       calcOpen = !calcOpen;
       calculator.classList.toggle('hidden', !calcOpen);
+      if (calcOpen) consoleEl.classList.add('hidden');
+      else calculator.querySelector('#calcInput').focus();
     };
 
     consoleBtn.onclick = () => {
       consoleOpen = !consoleOpen;
       consoleEl.classList.toggle('hidden', !consoleOpen);
+      if (consoleOpen) calculator.classList.add('hidden');
+      else document.getElementById('searchInput').focus();
     };
 
+    // Калькулятор
     function calculate() {
       const input = document.getElementById('calcInput').value;
       try {
@@ -109,71 +162,81 @@
       }
     }
 
+    // База данных предметов и крафтов
     const ingredients = {
-      "super smoothie": {
-        ingredients: ["3 Purple Potion", "1 Red Extract", "1 Blue Extract", "1 Oil", "1 Enzymes", "1 Glitter"],
+      // Ресурсы
+      "red extract": {
+        ingredients: ["50 Strawberry"],
+        methods: "Отримується з червоних коробок або крафтиться."
+      },
+      "blue extract": {
+        ingredients: ["50 Blueberry"],
+        methods: "Отримується з синіх коробок або крафтиться."
+      },
+      "enzymes": {
+        ingredients: ["10 Pineapple", "10 Royal Jelly", "1 Oil"],
+        methods: "Крафт у Blender."
+      },
+      "oil": {
+        ingredients: ["3 Sunflower Seed", "3 Pineapple", "3 Enzymes"],
+        methods: "Крафт у Blender, або отримується з квестів."
+      },
+      "glue": {
+        ingredients: ["10 Gumdrops", "1 Royal Jelly", "1 Enzymes"],
+        methods: "Крафт або випадає з подарунків."
+      },
+      "glitter": {
+        ingredients: ["25 Moon Charm", "1 Magic Bean", "1 Oil"],
+        methods: "Крафт або з Moon Sprout."
+      },
+      "tropical drink": {
+        ingredients: ["3 Coconut", "3 Pineapple", "3 Oil"],
         methods: "Крафт у Blender."
       },
       "purple potion": {
         ingredients: ["3 Red Extract", "3 Blue Extract", "3 Enzymes", "3 Oil", "1 Glitter"],
         methods: "Крафт у Blender."
       },
-      "oil": {
-        ingredients: ["3 Sunflower Seed", "3 Pineapple", "3 Enzymes"],
-        methods: "Крафт у Blender. Може бути отримано за квести або з коробок."
-      },
-      "enzymes": {
-        ingredients: ["10 Pineapple", "10 Royal Jelly", "1 Oil"],
+      "super smoothie": {
+        ingredients: ["3 Purple Potion", "1 Red Extract", "1 Blue Extract", "1 Oil", "1 Enzymes", "1 Glitter"],
         methods: "Крафт у Blender."
       },
-      "glue": {
-        ingredients: ["10 Gumdrops", "1 Royal Jelly", "1 Enzymes"],
-        methods: "Крафт або з подарунків, коробок."
+      "swirled wax": {
+        ingredients: ["15 Honey", "15 Turpentine"],
+        methods: "Крафт."
       },
-      "glitter": {
-        ingredients: ["25 Moon Charm", "1 Magic Bean", "1 Oil"],
-        methods: "Крафт або отримання з Moon Sprout."
+      "caustic wax": {
+        ingredients: ["15 Turpentine", "15 Caustic Cauliflower"],
+        methods: "Крафт."
       },
-      "tropical drink": {
-        ingredients: ["3 Coconut", "3 Pineapple", "3 Oil"],
-        methods: "Крафт у Blender."
+      "hard wax": {
+        ingredients: ["20 Honey", "20 Turpentine", "5 Caustic Cauliflower"],
+        methods: "Крафт."
       },
-      "red extract": {
-        ingredients: ["50 Strawberry"],
-        methods: "Крафт або випадання з червоних коробок."
+      "soft wax": {
+        ingredients: ["10 Honey", "10 Turpentine"],
+        methods: "Крафт."
       },
-      "blue extract": {
-        ingredients: ["50 Blueberry"],
-        methods: "Крафт або випадання з синіх коробок."
+      "turpentine": {
+        ingredients: ["25 Swirled Wax", "25 Soft Wax"],
+        methods: "Крафт."
       },
-      "dark scythe": {
-        ingredients: ["150 Red Extract", "150 Enzymes", "150 Super Smoothie", "1 Turpentine", "5 Caustic Wax", "5 Super Coconuts"],
-        methods: "Крафт у Red HQ після виконання Spirit Bear квестів."
+      "royal jelly": {
+        ingredients: ["100 Honey", "50 Royal Jelly"],
+        methods: "Отримується від бджіл, або крафт."
       },
-      "gummy baller": {
-        ingredients: ["150 Blue Extract", "150 Enzymes", "150 Super Smoothie", "1 Turpentine", "5 Caustic Wax", "5 Super Coconuts"],
-        methods: "Крафт у Gummy Lair після отримання Gummy Mask."
-      }
-    };
-
-    const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
-
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase();
-      const item = ingredients[query];
-      if (item) {
-        searchResults.innerHTML = `
-          <h3 class="text-lg font-bold mb-2">${query}</h3>
-          <p><strong>Інгредієнти:</strong></p>
-          <ul class="list-disc ml-6">
-            ${item.ingredients.map(i => `<li>${i}</li>`).join('')}
-          </ul>
-          <p class="mt-2"><strong>Способи отримання:</strong> ${item.methods}</p>
-        `;
-      } else {
-        searchResults.innerHTML = '<p>Нічого не знайдено...</p>';
-      }
-    });
-  </script></body>
-</html>
+      "moon charm": {
+        ingredients: ["1 Magic Bean", "1 Honey"],
+        methods: "Отримується з Moon Sprout."
+      },
+      "magic bean": {
+        ingredients: ["5 Enchanted Acorn", "5 Enchanted Stick"],
+        methods: "Отримується з квестів."
+      },
+      "sunflower seed": {
+        ingredients: [],
+        methods: "Збирається на соняшникових полях."
+      },
+      "pineapple": {
+        ingredients: [],
+        methods: "Збирається на тропіч
