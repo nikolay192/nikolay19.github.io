@@ -39,13 +39,20 @@
           <li>Tropical Drink</li>
           <li>Purple Potion</li>
           <li>Super Smoothie</li>
+          <li>Swirled Wax</li>
+          <li>Caustic Wax</li>
+          <li>Hard Wax</li>
+          <li>Soft Wax</li>
+          <li>Turpentine</li>
         </ul>
       </details>
       <details>
         <summary class="cursor-pointer text-lg font-bold">Палки</summary>
         <ul class="ml-4 mt-2 space-y-1">
-          <li>Dark Scythe</li>
+          <li>Petal Wand</li>
           <li>Tide Popper</li>
+          <li>Dark Scythe</li>
+          <li>Gummy Baller</li>
         </ul>
       </details>
       <details>
@@ -53,6 +60,8 @@
         <ul class="ml-4 mt-2 space-y-1">
           <li>Gummy Mask</li>
           <li>Demon Mask</li>
+          <li>Diamond Mask</li>
+          <li>Honey Mask</li>
         </ul>
       </details>
       <details>
@@ -60,6 +69,7 @@
         <ul class="ml-4 mt-2 space-y-1">
           <li>Gummy Belt</li>
           <li>Honey Belt</li>
+          <li>Supreme Star Amulet</li>
         </ul>
       </details>
     </div><!-- Основна консоль -->
@@ -102,11 +112,47 @@
     const ingredients = {
       "super smoothie": {
         ingredients: ["3 Purple Potion", "1 Red Extract", "1 Blue Extract", "1 Oil", "1 Enzymes", "1 Glitter"],
-        methods: "Крафт у Blender. Потрібно мати всі інгредієнти."
+        methods: "Крафт у Blender."
       },
       "purple potion": {
         ingredients: ["3 Red Extract", "3 Blue Extract", "3 Enzymes", "3 Oil", "1 Glitter"],
-        methods: "Отримується через крафт у Blender."
+        methods: "Крафт у Blender."
+      },
+      "oil": {
+        ingredients: ["3 Sunflower Seed", "3 Pineapple", "3 Enzymes"],
+        methods: "Крафт у Blender. Може бути отримано за квести або з коробок."
+      },
+      "enzymes": {
+        ingredients: ["10 Pineapple", "10 Royal Jelly", "1 Oil"],
+        methods: "Крафт у Blender."
+      },
+      "glue": {
+        ingredients: ["10 Gumdrops", "1 Royal Jelly", "1 Enzymes"],
+        methods: "Крафт або з подарунків, коробок."
+      },
+      "glitter": {
+        ingredients: ["25 Moon Charm", "1 Magic Bean", "1 Oil"],
+        methods: "Крафт або отримання з Moon Sprout."
+      },
+      "tropical drink": {
+        ingredients: ["3 Coconut", "3 Pineapple", "3 Oil"],
+        methods: "Крафт у Blender."
+      },
+      "red extract": {
+        ingredients: ["50 Strawberry"],
+        methods: "Крафт або випадання з червоних коробок."
+      },
+      "blue extract": {
+        ingredients: ["50 Blueberry"],
+        methods: "Крафт або випадання з синіх коробок."
+      },
+      "dark scythe": {
+        ingredients: ["150 Red Extract", "150 Enzymes", "150 Super Smoothie", "1 Turpentine", "5 Caustic Wax", "5 Super Coconuts"],
+        methods: "Крафт у Red HQ після виконання Spirit Bear квестів."
+      },
+      "gummy baller": {
+        ingredients: ["150 Blue Extract", "150 Enzymes", "150 Super Smoothie", "1 Turpentine", "5 Caustic Wax", "5 Super Coconuts"],
+        methods: "Крафт у Gummy Lair після отримання Gummy Mask."
       }
     };
 
