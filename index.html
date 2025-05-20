@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bee Swarm Craft Helper</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hidden-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
+  <!-- Панель іконок -->
+  <div class="p-4 flex gap-4">
+    <button id="calcBtn" class="bg-yellow-500 hover:bg-yellow-600 p-2 rounded-full">
+      Калькулятор
+    </button>
+    <button id="consoleBtn" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full">
+      Консоль
+    </button>
+  </div>  <!-- Калькулятор -->  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg hidden">
+    <h2 class="text-xl mb-4">Калькулятор</h2>
+    <input type="text" placeholder="Введи приклад..." class="w-full p-2 rounded mb-2 text-black" id="calcInput">
+    <button onclick="calculate()" class="bg-green-500 px-4 py-2 rounded">=</button>
+    <p class="mt-2" id="calcResult"></p>
+  </div>  <!-- Консоль -->  <div id="console" class="flex mt-4 hidden">
+    <!-- Меню з ресурсами -->
+    <div class="w-1/4 p-4 overflow-y-auto max-h-[80vh] hidden-scrollbar">
+      <details open>
+        <summary class="cursor-pointer text-lg font-bold">Ресурси</summary>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>Red Extract</li>
+          <li>Blue Extract</li>
+          <li>Enzymes</li>
+          <li>Oil</li>
+          <li>Glue</li>
+          <li>Glitter</li>
+          <li>Tropical Drink</li>
+          <li>Purple Potion</li>
+          <li>Super Smoothie</li>
+          <!-- Додай більше ресурсів тут -->
+        </ul>
+      </details><details>
+    <summary class="cursor-pointer text-lg font-bold">Палки</summary>
+    <ul class="ml-4 mt-2 space-y-1">
+      <li>Dark Scythe</li>
+      <li>Tide Popper</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary class="cursor-pointer text-lg font-bold">Маски</summary>
+    <ul class="ml-4 mt-2 space-y-1">
+      <li>Gummy Mask</li>
+      <li>Demon Mask</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary class="cursor-pointer text-lg font-bold">Пояси</summary>
+    <ul class="ml-4 mt-2 space-y-1">
+      <li>Gummy Belt</li>
+      <li>Honey Belt</li>
+    </ul>
+  </details>
+</div>
+
+<!-- Основна консоль -->
+<div class="w-3/4 p-4">
+  <input id="searchInput" type="text" placeholder="Сюди вводити текст" class="w-full p-2 rounded text-black">
+  <div id="searchResults" class="mt-4">
+    <!-- Тут буде показано результат крафта -->
+  </div>
+</div>
+
+  </div>  <script>
+    const calcBtn = document.getElementById('calcBtn');
+    const consoleBtn = document.getElementById('consoleBtn');
+    const calculator = document.getElementById('calculator');
+    const consoleEl = document.getElementById('console');
+
+    calcBtn.onclick = () => calculator.classList.toggle('hidden');
+    consoleBtn.onclick = () => consoleEl.classList.toggle('hidden');
+
+    function calculate() {
+      const input = document.getElementById('calcInput').value;
+      try {
+        const result = eval(input);
+        document.getElementById('calcResult').innerText = `Результат: ${result}`;
+      } catch {
+        document.getElementById('calcResult').innerText = 'Помилка в обчисленнях';
+      }
+    }
+
+    const ingredients = {
+     
