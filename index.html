@@ -19,12 +19,12 @@
     <button id="consoleBtn" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full">
       Консоль
     </button>
-  </div>  <!-- Калькулятор -->  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg hidden">
+  </div>  <!-- Калькулятор -->  <div id="calculator" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-lg hidden z-50">
     <h2 class="text-xl mb-4">Калькулятор</h2>
     <input type="text" placeholder="Введи приклад..." class="w-full p-2 rounded mb-2 text-black" id="calcInput">
     <button onclick="calculate()" class="bg-green-500 px-4 py-2 rounded">=</button>
     <p class="mt-2" id="calcResult"></p>
-  </div>  <!-- Консоль -->  <div id="console" class="flex mt-4 hidden">
+  </div>  <!-- Консоль -->  <div id="console" class="flex mt-4 hidden z-40">
     <!-- Меню з ресурсами -->
     <div class="w-1/4 p-4 overflow-y-auto max-h-[80vh] hidden-scrollbar">
       <details open>
@@ -39,34 +39,30 @@
           <li>Tropical Drink</li>
           <li>Purple Potion</li>
           <li>Super Smoothie</li>
-          <!-- Додай більше ресурсів тут -->
         </ul>
-      </details><details>
-    <summary class="cursor-pointer text-lg font-bold">Палки</summary>
-    <ul class="ml-4 mt-2 space-y-1">
-      <li>Dark Scythe</li>
-      <li>Tide Popper</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary class="cursor-pointer text-lg font-bold">Маски</summary>
-    <ul class="ml-4 mt-2 space-y-1">
-      <li>Gummy Mask</li>
-      <li>Demon Mask</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary class="cursor-pointer text-lg font-bold">Пояси</summary>
-    <ul class="ml-4 mt-2 space-y-1">
-      <li>Gummy Belt</li>
-      <li>Honey Belt</li>
-    </ul>
-  </details>
-</div>
-
-<!-- Основна консоль -->
+      </details>
+      <details>
+        <summary class="cursor-pointer text-lg font-bold">Палки</summary>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>Dark Scythe</li>
+          <li>Tide Popper</li>
+        </ul>
+      </details>
+      <details>
+        <summary class="cursor-pointer text-lg font-bold">Маски</summary>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>Gummy Mask</li>
+          <li>Demon Mask</li>
+        </ul>
+      </details>
+      <details>
+        <summary class="cursor-pointer text-lg font-bold">Пояси</summary>
+        <ul class="ml-4 mt-2 space-y-1">
+          <li>Gummy Belt</li>
+          <li>Honey Belt</li>
+        </ul>
+      </details>
+    </div><!-- Основна консоль -->
 <div class="w-3/4 p-4">
   <input id="searchInput" type="text" placeholder="Сюди вводити текст" class="w-full p-2 rounded text-black">
   <div id="searchResults" class="mt-4">
@@ -80,8 +76,18 @@
     const calculator = document.getElementById('calculator');
     const consoleEl = document.getElementById('console');
 
-    calcBtn.onclick = () => calculator.classList.toggle('hidden');
-    consoleBtn.onclick = () => consoleEl.classList.toggle('hidden');
+    let calcOpen = false;
+    let consoleOpen = false;
+
+    calcBtn.onclick = () => {
+      calcOpen = !calcOpen;
+      calculator.classList.toggle('hidden', !calcOpen);
+    };
+
+    consoleBtn.onclick = () => {
+      consoleOpen = !consoleOpen;
+      consoleEl.classList.toggle('hidden', !consoleOpen);
+    };
 
     function calculate() {
       const input = document.getElementById('calcInput').value;
@@ -94,4 +100,34 @@
     }
 
     const ingredients = {
-     
+      "super smoothie": {
+        ingredients: ["3 Purple Potion", "1 Red Extract", "1 Blue Extract", "1 Oil", "1 Enzymes", "1 Glitter"],
+        methods: "Крафт у Blender. Потрібно мати всі інгредієнти."
+      },
+      "purple potion": {
+        ingredients: ["3 Red Extract", "3 Blue Extract", "3 Enzymes", "3 Oil", "1 Glitter"],
+        methods: "Отримується через крафт у Blender."
+      }
+    };
+
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const item = ingredients[query];
+      if (item) {
+        searchResults.innerHTML = `
+          <h3 class="text-lg font-bold mb-2">${query}</h3>
+          <p><strong>Інгредієнти:</strong></p>
+          <ul class="list-disc ml-6">
+            ${item.ingredients.map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <p class="mt-2"><strong>Способи отримання:</strong> ${item.methods}</p>
+        `;
+      } else {
+        searchResults.innerHTML = '<p>Нічого не знайдено...</p>';
+      }
+    });
+  </script></body>
+</html>
